@@ -10,8 +10,6 @@ def recognize():
     cap.set(3, 640)
     cap.set(4, 480)
 
-    attend = True
-
     while True:
         _, img = cap.read()
         cv2.imshow("Output", img)
@@ -24,14 +22,13 @@ def recognize():
 
         if len(face_bounding_boxes) == 1:
             print("Face Detected")
-
-            original_rgb_img = cv2.resize(rgb_small_img, (0,0), fx=4, fy=4)
             
-            predictions = face_recognition_knn.predict(original_rgb_img, model_path="knn_model.clf")
+            predictions = face_recognition_knn.predict(rgb_small_img, model_path="knn_model.clf")
             for name, (top, right, bottom, left) in predictions:
                 print("- Found {} at ({}, {})".format(name, left, top))
 
             name = predictions[0][0]
+
             if name != "unknown":
                 name_path = os.path.join("data/train", name)
                 img_path = image_files_in_folder(name_path)[0]
