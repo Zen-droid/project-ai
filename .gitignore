@@ -1,2 +1,11 @@
 # Directories
 venv
+__pycache__
+
+# Files
+database_example.py
+file_handler.py
+tempCodeRunnerFile.py
+test.db
+test.py
+tkinter_examples.py
