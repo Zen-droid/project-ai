@@ -4,6 +4,8 @@ import face_recognition_knn
 import cv2
 import os
 import attendance_window
+import bounding_boxes
+
 
 def recognize():
     cap = cv2.VideoCapture(0)
@@ -12,7 +14,9 @@ def recognize():
 
     while True:
         _, img = cap.read()
-        cv2.imshow("Output", img)
+        
+        img = bounding_boxes.draw_overlay(img)
+        cv2.imshow("Face Detection", img)
 
         # Scaling image down by 1/4 resolution for faster face recognition
         small_img = cv2.resize(img, (0,0), fx=0.25, fy=0.25)
@@ -22,11 +26,13 @@ def recognize():
 
         if len(face_bounding_boxes) == 1:
             print("Face Detected")
+            # original_rgb_img = cv2.resize(rgb_small_img, (0,0), fx=4, fy=4)
             
             predictions = face_recognition_knn.predict(rgb_small_img, model_path="knn_model.clf")
             for name, (top, right, bottom, left) in predictions:
                 print("- Found {} at ({}, {})".format(name, left, top))
-
+            
+            # if predictions:
             name = predictions[0][0]
 
             if name != "unknown":
