@@ -5,7 +5,6 @@ from datetime import datetime
 import db_handler
 import photo_generator
 
-
 def get_curr_time():
     curr_time = datetime.now().strftime("%H:%M:%S")
     return str(curr_time)
@@ -13,6 +12,16 @@ def get_curr_time():
 def get_curr_date():
     curr_date = datetime.now().strftime("%Y-%m-%d")
     return str(curr_date)
+
+def check_attendance(id):
+    data = db_handler.get_attendance_data(id)
+
+    if data:
+        # Check if attended today
+        for dt in data:
+            if dt[3] == get_curr_date():
+                return True
+    return False
 
 def employee_header(root):
     profile_id = Label(root, text="Employee Id")
@@ -29,9 +38,7 @@ def employee_header(root):
         sep = Label(root, text=":")
         sep.grid(row=x, column=2)
 
-def employee_content(root, img_path, emp_id):
-    # Import employee image and cropped it into 3:4 aspect ratio 
-
+def employee_content(root, emp_id):
     employee_data = db_handler.get_employee_data(emp_id)
 
     if employee_data is None:
@@ -64,14 +71,15 @@ def show_attendance_window(img_path, emp_id):
     root = Tk()
     root.title("Employee Information")
 
+    # Import employee image and cropped it into 3:4 aspect ratio
     img = Img.open(img_path)
     img = photo_generator.photoID_format(img)
     finalImg = ImageTk.PhotoImage(image=img)
     profile_image = Label(root, image=finalImg)
-    profile_image.grid(row=0, column=0, rowspan=4)
+    profile_image.grid(row=0, column=0, rowspan=4)  
     
     employee_header(root)
-    employee_content(root, img_path, emp_id)
+    employee_content(root, emp_id)
 
     attend_time = Label(root, text="Attendance Time: "+ get_curr_date() + " " + get_curr_time())
     attend_button = Button(root, text="Attend", command=attend(emp_id))
@@ -86,8 +94,9 @@ def show_attendance_window(img_path, emp_id):
     root.mainloop()
 
 if __name__ == "__main__":
-    show_attendance_window("data/train/2/001.jpg", 2)
+    # show_attendance_window("data/train/2/001.jpg", 2)
     # data = get_employee_data(5)
     # print(data)
     # print(type(data))
     # pass
+    check_attendance(5)

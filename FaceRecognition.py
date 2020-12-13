@@ -34,8 +34,9 @@ def recognize():
             
             # if predictions:
             name = predictions[0][0]
+            present = attendance_window.check_attendance(name)
 
-            if name != "unknown":
+            if name != "unknown" and not present:
                 name_path = os.path.join("data/train", name)
                 img_path = image_files_in_folder(name_path)[0]
                 attendance_window.show_attendance_window(img_path, int(name))
