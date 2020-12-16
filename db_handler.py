@@ -5,7 +5,7 @@ def get_employee_data(id=0):
     c = conn.cursor()
 
     if id != 0:
-        c.execute("SELECT * FROM MsEmployee WHERE EmployeeID=?", str(id))
+        c.execute("SELECT * FROM MsEmployee WHERE EmployeeID=?", (id,))
     else:
         c.execute("SELECT * FROM MsEmployee")
     
@@ -26,16 +26,29 @@ def insert_attendance_data(data):
     conn.close()
     return success
 
-def get_attendance_data(id):
+def get_attendance_data(id=0):
     conn = sqlite3.connect("employee_data.db")
     c = conn.cursor()
 
-    c.execute("SELECT * FROM Attendance WHERE EmployeeID=?", str(id))
-
-    # c.execute("SELECT * FROM Attendance")
+    if id != 0:
+        c.execute("SELECT * FROM Attendance WHERE EmployeeID=?", (id,))
+    else:
+        c.execute("SELECT * FROM Attendance")
     return c.fetchall()
 
+def clear_attendance_record(id=0):
+    conn = sqlite3.connect("employee_data.db")
+    c = conn.cursor()
+
+    if id != 0:
+        c.execute("DELETE FROM Attendance WHERE EmployeeID=?", str(id))
+    else:
+        c.execute("DELETE FROM Attendance")
+
+    conn.commit()
+    conn.close()
+
 if __name__ == "__main__":
-    data = get_employee_data(2)
-    pass
+    print(get_attendance_data(str(2)))
+    # pass
 
