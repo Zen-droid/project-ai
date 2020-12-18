@@ -38,9 +38,9 @@ def draw_attendance_status(img, small_bounding_box, temps):
 
     # Attendance Status
     img = cv2.rectangle(img, (left, top+int(h/2)+10), (left+150, top+int(h/2)-30), color, cv2.FILLED)
-    img = cv2.putText(img, text, (left, top+int(h/2)), cv2.FONT_HERSHEY_PLAIN, 1, (255,255,255))
+    img = cv2.putText(img, text, (left, top+int(h/2)), cv2.FONT_HERSHEY_PLAIN, 1.8, (255,255,255), 2)
     # Temperature
-    img = cv2.putText(img, "Temperature = {}".format(temps), (left, bottom+20), cv2.FONT_HERSHEY_PLAIN, 0.9, (255,255,255), 1)
+    img = cv2.putText(img, "Temperature = {}".format(temps), (left, bottom+15), cv2.FONT_HERSHEY_PLAIN, 0.9, (255,255,255), 1)
 
     return img
 

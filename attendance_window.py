@@ -51,7 +51,7 @@ class Employee:
             self.e.grid(row=i, column=3, sticky="w")
 
         self.attend_time = Label(root, text="Attendance Time: "+ get_curr_time())
-        self.attend_detail = Button(root, text="Attendance Detail", command=lambda: self.show_attendance_record(root, emp_id), background="#d4d4d4")
+        self.attend_detail = Button(root, text="Attendance Record", command=lambda: self.show_attendance_record(root, emp_id), background="#d4d4d4")
         self.exit_btn = Button(root, text="Quit", command=root.destroy, background="#fc3503")
 
         self.attend_time.grid(row=4, column=0, columnspan=4)
