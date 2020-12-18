@@ -49,6 +49,5 @@ def clear_attendance_record(id=0):
     conn.close()
 
 if __name__ == "__main__":
-    print(get_attendance_data(str(2)))
-    # pass
+    pass
 
